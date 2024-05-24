@@ -18,8 +18,8 @@ export class AgendaController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.agendaService.findOne(+id);
+  findIdentificacion(@Param('id') id: string) {
+    return this.agendaService.findIdentificacion(id);
   }
 
   @Patch(':id')
