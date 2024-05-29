@@ -18,8 +18,12 @@ export class AgendaService {
     return await this.agendaRepositorio.find();
   }
 
-  async findIdentificacion(id: string) {
-    const agendaCita = await this.agendaRepositorio.findOne({ where: { Identificación: id } });
+  async findFecha(fecha: string) {
+    const fechaConvertida = new Date(fecha);
+    fechaConvertida.setHours(fechaConvertida.getHours() + 5);
+    fechaConvertida.toISOString();
+    
+    const agendaCita = await this.agendaRepositorio.find({ where: { Fecha: fechaConvertida } });
     if (!agendaCita) {
       throw new NotFoundException('No se encontró la cita');
     }

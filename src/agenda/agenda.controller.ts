@@ -17,9 +17,9 @@ export class AgendaController {
     return this.agendaService.findAll();
   }
 
-  @Get(':id')
-  findIdentificacion(@Param('id') id: string) {
-    return this.agendaService.findIdentificacion(id);
+  @Get(':Fecha')
+  findFecha(@Param('Fecha') fecha: string) {
+    return this.agendaService.findFecha(fecha);
   }
 
   @Patch(':id')
