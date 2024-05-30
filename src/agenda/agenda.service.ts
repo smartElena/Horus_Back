@@ -1,26 +1,40 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateAgendaDto } from './dto/create-agenda.dto';
 import { UpdateAgendaDto } from './dto/update-agenda.dto';
+import { Agenda } from './entities/agenda.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AgendaService {
-  create(createAgendaDto: CreateAgendaDto) {
+
+  constructor(@InjectRepository(Agenda) private readonly agendaRepositorio: Repository<Agenda>) { }
+
+  async create(createAgendaDto: CreateAgendaDto) {
     return 'This action adds a new agenda';
   }
 
-  findAll() {
-    return `This action returns all agenda`;
+  async findAll(): Promise<Agenda[]> {
+    return await this.agendaRepositorio.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} agenda`;
+  async findFecha(fecha: string) {
+    const fechaConvertida = new Date(fecha);
+    fechaConvertida.setHours(fechaConvertida.getHours() + 5);
+    fechaConvertida.toISOString();
+    
+    const agendaCita = await this.agendaRepositorio.find({ where: { Fecha: fechaConvertida } });
+    if (!agendaCita) {
+      throw new NotFoundException('No se encontró la cita');
+    }
+    return agendaCita;
   }
 
-  update(id: number, updateAgendaDto: UpdateAgendaDto) {
+  async update(id: number, updateAgendaDto: UpdateAgendaDto) {
     return `This action updates a #${id} agenda`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} agenda`;
   }
 }
