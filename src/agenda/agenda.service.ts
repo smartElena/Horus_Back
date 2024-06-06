@@ -4,6 +4,7 @@ import { UpdateAgendaDto } from './dto/update-agenda.dto';
 import { Agenda } from './entities/agenda.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import * as moment from 'moment';
 
 @Injectable()
 export class AgendaService {
@@ -19,13 +20,15 @@ export class AgendaService {
   }
 
   async findFecha(fecha: string) {
-    console.log(fecha)
-    const fechaConvertida = new Date(fecha);
-    fechaConvertida.setHours(fechaConvertida.getHours() + 5);
-    fechaConvertida.toISOString();
-    console.log(fechaConvertida)
+    const fechaMoment = moment(fecha);
+    console.log({ fechaMoment })
 
-    const agendaCita = await this.agendaRepositorio.find({ where: { Fecha: fechaConvertida } });
+    // Obtener la fecha en formato UTC
+    const fechaUTC = fechaMoment.utc();
+    console.log({ fechaUTC })
+    console.log({ todate: fechaUTC.toDate() })
+
+    const agendaCita = await this.agendaRepositorio.find({ where: { Fecha: fechaUTC.toDate() } });
     if (!agendaCita) {
       throw new NotFoundException('No se encontró la cita');
     }
