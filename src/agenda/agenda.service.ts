@@ -19,6 +19,7 @@ export class AgendaService {
   }
 
   async findFecha(fecha: string) {
+    console.log('first')
     const fechaConvertida = new Date(fecha);
     fechaConvertida.setHours(fechaConvertida.getHours() + 5);
     fechaConvertida.toISOString();
