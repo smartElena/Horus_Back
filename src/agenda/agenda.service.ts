@@ -21,14 +21,11 @@ export class AgendaService {
   async findFecha(fecha: string) {
     console.log(fecha)
     const fechaConvertida = new Date(fecha);
-    console.log(fechaConvertida)
-    // fechaConvertida.setHours(0, 0, 0, 0);
-    // fechaConvertida.toISOString();
-
+    fechaConvertida.setHours(fechaConvertida.getHours() + 5);
+    fechaConvertida.toISOString();
     console.log(fechaConvertida)
 
     const agendaCita = await this.agendaRepositorio.find({ where: { Fecha: fechaConvertida } });
-    // console.log(agendaCita)
     if (!agendaCita) {
       throw new NotFoundException('No se encontró la cita');
     }
