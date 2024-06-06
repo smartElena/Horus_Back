@@ -21,12 +21,9 @@ export class AgendaService {
 
   async findFecha(fecha: string) {
     const fechaMoment = moment(fecha);
-    console.log({ fechaMoment })
 
     // Obtener la fecha en formato UTC
     const fechaUTC = fechaMoment.utc();
-    console.log({ fechaUTC })
-    console.log({ todate: fechaUTC.toDate() })
 
     const agendaCita = await this.agendaRepositorio.find({ where: { Fecha: fechaUTC.toDate() } });
     if (!agendaCita) {
