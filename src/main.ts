@@ -9,7 +9,7 @@ async function bootstrap() {
     'http://localhost:5173',
   ];
   // app.setGlobalPrefix('api');
-  app.enableCors({ origin: allowedOrigins });
+  app.enableCors({ origin: allowedOrigins, credentials: true });
   await app.listen(3000);
 }
 bootstrap();
