@@ -25,7 +25,6 @@ export class AgendaService {
     fechaConvertida.toISOString();
 
     const agendaCita = await this.agendaRepositorio.find({ where: { Fecha: fechaConvertida } });
-    console.log(agendaCita);
     if (!agendaCita) {
       throw new NotFoundException('No se encontró la cita');
     }
