@@ -5,6 +5,8 @@ import { AgendaModule } from './agenda/agenda.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AppDataSource } from '../ormconfig';
+import { UsuarioModule } from './usuario/usuario.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -18,6 +20,8 @@ import { AppDataSource } from '../ormconfig';
       },
     }),
     AgendaModule,
+    UsuarioModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
